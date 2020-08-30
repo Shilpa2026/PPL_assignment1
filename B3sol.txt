@@ -1,0 +1,114 @@
+B-3)
+
+			PROGRAM											OUTPUT
+
+                                                                                               |
+;; Function main (main, funcdef_no=12, decl_uid=2976, cgraph_uid=12, symbol_order=12)          |;; Function main (main, funcdef_no=12, decl_uid=2976, cgraph_uid=12, symbol_order=12) (executed once)
+                                                                                               |
+main ()                                                                                        |;; 2 loops found
+{                                                                                              |;;
+  int b;                                                                                       |;; Loop 0
+  int a;                                                                                       |;;  header 0, latch 1
+  int _8;                                                                                      |;;  depth 0, outer -1
+                                                                                               |;;  nodes: 0 1 2 3 4 5
+  <bb 2> [0.00%]:                                                                              |;;
+  a_4 = 4;                                                                                     |;; Loop 1
+  goto <bb 7>; [0.00%]                                                                         |;;  header 4, latch 3
+                                                                                               |;;  depth 1, outer 0
+  <bb 3> [0.00%]:                                                                              |;;  nodes: 4 3
+  if (a_1 <= 3)                                                                                |;; 2 succs { 4 }
+    goto <bb 4>; [0.00%]                                                                       |;; 3 succs { 4 }
+  else                                                                                         |;; 4 succs { 3 5 }
+    goto <bb 5>; [0.00%]                                                                       |;; 5 succs { 1 }
+                                                                                               |
+  <bb 4> [0.00%]:                                                                              |SSA replacement table
+  b_10 = b_3 + 2;                                                                              |N_i -> { O_1 ... O_j } means that N_i replaces O_1, ..., O_j
+  goto <bb 6>; [0.00%]                                                                         |
+                                                                                               |b_6 -> { b_2 }
+  <bb 5> [0.00%]:                                                                              |Incremental SSA update started at block: 4
+  b_9 = b_3 * 2;                                                                               |Number of blocks in CFG: 6
+                                                                                               |Number of blocks to update: 3 ( 50%)
+  <bb 6> [0.00%]:                                                                              |
+  # b_2 = PHI <b_10(4), b_9(5)>                                                                |
+  a_11 = a_1 + 1;                                                                              |
+                                                                                               |SSA replacement table
+  <bb 7> [0.00%]:                                                                              |N_i -> { O_1 ... O_j } means that N_i replaces O_1, ..., O_j
+  # a_1 = PHI <a_4(2), a_11(6)>                                                                |
+  # b_3 = PHI <b_5(D)(2), b_2(6)>                                                              |a_9 -> { a_1 }
+  if (a_1 <= 99)                                                                               |Incremental SSA update started at block: 4
+    goto <bb 3>; [0.00%]                                                                       |Number of blocks in CFG: 6
+  else                                                                                         |Number of blocks to update: 2 ( 33%)
+    goto <bb 8>; [0.00%]                                                                       |
+                                                                                               |
+  <bb 8> [0.00%]:                                                                              |
+  printf ("%d%d", a_1, b_3);                                                                   |Value ranges after VRP:
+  _8 = 0;                                                                                      |
+  return _8;                                                                                   |a_1: [4, 100]
+                                                                                               |b_2: VARYING
+}                                                                                              |b_3(D): UNDEFINED
+                                                                                               |b_6: [b_2, b_2]
+                                                                                               |b_7: VARYING
+~                                                                                              |a_8: [5, 100]
+~                                                                                              |a_9: [4, 99]  EQUIVALENCES: { a_1 } (1 elements)
+~                                                                                              |
+~                                                                                              |
+~                                                                                              |Simplified relational if (a_1 <= 99)
+~                                                                                              | into if (a_1 != 100)
+~                                                                                              |
+~                                                                                              |Removing basic block 3
+~                                                                                              |
+~                                                                                              |SSA replacement table
+~                                                                                              |N_i -> { O_1 ... O_j } means that N_i replaces O_1, ..., O_j
+~                                                                                              |
+~                                                                                              |a_10 -> { a_1 }
+~                                                                                              |b_11 -> { b_2 }
+~                                                                                              |a_12 -> { a_1 }
+~                                                                                              |b_13 -> { b_2 }
+~                                                                                              |Incremental SSA update started at block: 6
+~                                                                                              |Number of blocks in CFG: 7
+~                                                                                              |Number of blocks to update: 4 ( 57%)
+~                                                                                              |
+~                                                                                              |
+~                                                                                              |main ()
+~                                                                                              |{
+~                                                                                              |  int b;
+~                                                                                              |  int a;
+~                                                                                              |
+~                                                                                              |  <bb 2> [1.03%]:
+~                                                                                              |  goto <bb 6>; [100.00%]
+~                                                                                              |
+~                                                                                              |  <bb 3> [98.97%]:
+~                                                                                              |  # a_12 = PHI <a_1(4), a_10(6)>
+~                                                                                              |  # b_13 = PHI <b_2(4), b_11(6)>
+~                                                                                              |  b_7 = b_13 * 2;
+~                                                                                              |  a_8 = a_12 + 1;
+~                                                                                              |
+~                                                                                              |  <bb 4> [98.97%]:
+~                                                                                              |  # a_1 = PHI <a_8(3)>
+~                                                                                              |  # b_2 = PHI <b_7(3)>
+~                                                                                              |  if (a_1 != 100)
+~                                                                                              |    goto <bb 3>; [98.96%]
+~                                                                                              |  else
+~                                                                                              |    goto <bb 5>; [1.04%]
+~                                                                                              |
+~                                                                                              |  <bb 5> [1.03%]:
+~                                                                                              |  # b_6 = PHI <b_2(4)>
+~                                                                                              |  printf ("%d%d", 100, b_6);
+~                                                                                              |  return 0;
+~                                                                                              |
+~                                                                                              |  <bb 6> [1.03%]:
+~                                                                                              |  # a_10 = PHI <4(2)>
+~                                                                                              |  # b_11 = PHI <b_3(D)(2)>
+~                                                                                              |  goto <bb 3>; [100.00%]
+~                                                                                              |
+~                                                                                              |}
+~                                                                                              |
+~                                                                                              |
+
+SOLUTION:
+
+
+1   Variable `a' can take the values  4 to 99. Since, the `if' condition
+  will never be  true for the give loop  bounds, [b = b +  2] is never
+  executed. Therefore, the optimized  code has eliminated this program
+statement.
